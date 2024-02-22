@@ -33,7 +33,7 @@ namespace IngameScript
                 return false;
             }
 
-            input = input.Substring(startIndex).Substring(0, input.LastIndexOf(':') + 1);
+            input = input.Substring(startIndex, input.LastIndexOf(':') + 1 - startIndex);
             string[] parts = input.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
             string name;
