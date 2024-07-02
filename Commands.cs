@@ -278,7 +278,6 @@ namespace IngameScript
 
         private void CommandJourney(CommandLine cmd)
         {
-            AbortNav(false);
             optionalInfo = "";
             if (cmd.Count < 2)
                 return;
