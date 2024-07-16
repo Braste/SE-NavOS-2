@@ -13,7 +13,7 @@ Config (In the customdata of the pb - Must recompile when modified!!):
 
 # GyroGroupName: Same as above but for gyros. Uses the first gyro in the group.
 
-# ConsoleLcdName: Name of the LCD you want some navigation information to be written to
+# ConsoleLcdName: Name of the LCD you want some navigation information to be written to. The number behind the colons is to choose a display, if the block has multiple (like in cockpits)
 
 # CruiseOffsetDist: For GPS and X:Y:Z cruise commands, come to a stop this many meters earlier than the target
 # CruiseOffsetSideDist: For GPS and X:Y:Z cruise commands, offset the target by this many meters to the side (side = a random perpendicular direction to the target from your current position)
@@ -50,6 +50,9 @@ Example: Cruise 500 GPS:target:15000:70000:17000:FFFFFF
 
 # Retro/Retrograde
 Points the ship in the opposite direction of travel
+
+# Retrotoggle
+Points the ship in the opposite direction of travel or aborts the routine
 
 # Prograde
 Points the ship in the direction of travel

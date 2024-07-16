@@ -28,7 +28,7 @@ namespace IngameScript
 
         private bool active = false;
 
-        public void flush()
+        public void Flush()
         {
             if (!active)
             {
@@ -39,7 +39,7 @@ namespace IngameScript
             }
         }
 
-        private void calculateAxisSpecificData(double now, ref double prior, ref double lastMPT, ref double mod, out bool ontarg, out bool braking)//, out double ticksToStop, out double ticksToTarget)
+        private void CalculateAxisSpecificData(double now, ref double prior, ref double lastMPT, ref double mod, out bool ontarg, out bool braking)//, out double ticksToStop, out double ticksToTarget)
         {
             ontarg = false;
 
@@ -142,15 +142,15 @@ namespace IngameScript
 
         public void Orient(Vector3D forward, IMyGyro gyro, MatrixD refMatrix)
         {
-            flush();
+            Flush();
 
             double pitch, yaw, roll;
             GetRotationAnglesSimultaneous(forward, refMatrix, out yaw, out pitch, out roll);
 
             bool yT, pT, rT, yB, pB, rB;
-            calculateAxisSpecificData(roll, ref lastAngleRoll, ref lMPTRoll, ref modr, out rT, out rB);
-            calculateAxisSpecificData(pitch, ref lastAnglePitch, ref lMPTPitch, ref modp, out pT, out pB);
-            calculateAxisSpecificData(yaw, ref lastAngleYaw, ref lMPTYaw, ref mody, out yT, out yB);
+            CalculateAxisSpecificData(roll, ref lastAngleRoll, ref lMPTRoll, ref modr, out rT, out rB);
+            CalculateAxisSpecificData(pitch, ref lastAnglePitch, ref lMPTPitch, ref modp, out pT, out pB);
+            CalculateAxisSpecificData(yaw, ref lastAngleYaw, ref lMPTYaw, ref mody, out yT, out yB);
 
             Vector3D a_impulse = new Vector3D(pB ? 0 : pitch, yB ? 0 : yaw, rB ? 0 : roll);
             if (a_impulse != Vector3D.Zero)

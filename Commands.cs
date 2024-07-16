@@ -23,6 +23,7 @@ namespace IngameScript
                 { "retro", cmd => CommandRetrograde() }, { "retrograde", cmd => CommandRetrograde() },
                 { "retroburn", cmd => CommandRetroburn() },
                 { "prograde", cmd => CommandPrograde() },
+                { "retrotoggle", cmd => CommandRetroToggle() },
                 { "match", cmd => CommandSpeedMatch() }, { "speedmatch", cmd => CommandSpeedMatch() },
                 { "orient", CommandOrient },
                 { "calibrateturn", cmd => CommandCalibrateTurnTime() },
@@ -33,7 +34,7 @@ namespace IngameScript
 
         private void HandleArgs(string argument)
         {
-            if (String.IsNullOrWhiteSpace(argument))
+            if (string.IsNullOrWhiteSpace(argument))
             {
                 return;
             }
@@ -129,7 +130,7 @@ namespace IngameScript
                     }
                     catch (Exception e)
                     {
-                        optionalInfo = "Error occurred while parsing coords";
+                        optionalInfo = $"Error occurred while parsing coords: {e}";
                         return;
                     }
                 }
@@ -187,6 +188,24 @@ namespace IngameScript
             cruiseController.CruiseTerminated += CruiseTerminated;
             config.PersistStateData = $"{NavModeEnum.Retrograde}";
             SaveConfig();
+        }
+
+        private void CommandRetroToggle()
+        {
+            if (NavMode == NavModeEnum.Retrograde)
+            {
+                AbortNav(false);                
+            }
+            else
+            {
+                AbortNav(false);
+                optionalInfo = "";
+                NavMode = NavModeEnum.Retrograde;
+                cruiseController = new Retrograde(aimController, controller, gyros);
+                cruiseController.CruiseTerminated += CruiseTerminated;
+                config.PersistStateData = $"{NavModeEnum.Retrograde}";
+                SaveConfig();
+            }
         }
 
         private void CommandRetroburn()

@@ -23,7 +23,7 @@ namespace IngameScript
         public string ShipControllerTag { get; set; } = "Nav";
         public string ThrustGroupName { get; set; } = "NavThrust";
         public string GyroGroupName { get; set; } = "NavGyros";
-        public string ConsoleLcdName { get; set; } = "consoleLcd";
+        public string ConsoleLcdName { get; set; } = "consoleLcd:0";
         public double CruiseOffsetDist { get; set; } = 0;
         public double CruiseOffsetSideDist { get; set; } = 500;
         public double Ship180TurnTimeSeconds { get; set; } = 10.0;
@@ -184,7 +184,7 @@ namespace IngameScript
             strb.AppendLine("// If this group doesn't exist it uses all gyros");
             strb.AppendLine($"{nameof(GyroGroupName)}={GyroGroupName}");
             strb.AppendLine();
-            strb.AppendLine("// Copies pb output to this lcd is it exists");
+            strb.AppendLine("// Copies pb output to this lcd if it exists");
             strb.AppendLine($"{nameof(ConsoleLcdName)}={ConsoleLcdName}");
             strb.AppendLine();
             strb.AppendLine("// Cruise offset distances in meters");

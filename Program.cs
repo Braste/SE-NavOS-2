@@ -252,9 +252,9 @@ namespace IngameScript
             {
                 idleCounter++;
             }
-            else if (cruiseController != null)
+            else
             {
-                cruiseController.Run();
+                cruiseController?.Run();
             }
 
             if (idleCounter >= 600)
@@ -276,6 +276,7 @@ namespace IngameScript
             DisableGyroOverrides();
 
             cruiseController = null;
+            NavMode = NavModeEnum.Idle;
 
             if (saveconfig)
             {
@@ -380,7 +381,14 @@ namespace IngameScript
             debugLcd = TryGetBlockWithName<IMyTextSurfaceProvider>(debugLcdName)?.GetSurface(0);
             if (debugLcd != null)
                 debug = new StringBuilder();
-            consoleLcd = TryGetBlockWithName<IMyTextSurfaceProvider>(config.ConsoleLcdName)?.GetSurface(0);
+            if (config.ConsoleLcdName.Contains(":"))
+            {
+                int surface = int.Parse(config.ConsoleLcdName.Split(':')[1]);
+                consoleLcd = TryGetBlockWithName<IMyTextSurfaceProvider>(config.ConsoleLcdName.Split(':')[0])?.GetSurface(surface);
+            }
+            else
+                consoleLcd = TryGetBlockWithName<IMyTextSurfaceProvider>(config.ConsoleLcdName)?.GetSurface(0);
+
         }
 
         private T TryGetBlockWithName<T>(string name) where T : class
@@ -414,6 +422,7 @@ Cruise <Speed> <distance>
 Cruise <Speed> <X:Y:Z>
 Cruise <Speed> <GPS>
 Retro/Retrograde
+Retrotoggle
 Prograde
 Retroburn
 Match
@@ -503,8 +512,8 @@ Journey Start
 
             seconds %= 60;
 
-            if (hours > 0) return $"{hours.ToString("00")}:{minutes.ToString("00")}:{seconds.ToString("00")}{(fractions ? (seconds - (int)seconds).ToString(".000") : "")}";
-            else return $"{minutes.ToString("00")}:{seconds.ToString("00")}";
+            if (hours > 0) return $"{hours:00}:{minutes:00}:{seconds:00}{(fractions ? (seconds - (int)seconds).ToString(".000") : "")}";
+            else return $"{minutes:00}:{seconds:00}";
         }
 
         public static void Log(string message) => debug?.AppendLine(message);
